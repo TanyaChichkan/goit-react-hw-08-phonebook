@@ -1,0 +1,17 @@
+.link{
+    display: block;
+    margin:10px;
+    text-decoration: none;
+    color:grey;
+}
+
+.linkActive{
+    display: block;
+    margin:10px;
+    text-decoration: none;
+    color:blue;
+}
+
+.linkList{
+    display: flex;
+}
