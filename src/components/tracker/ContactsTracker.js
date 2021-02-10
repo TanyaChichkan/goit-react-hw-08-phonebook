@@ -12,11 +12,14 @@ import Spinner from "../spinner/Spinner";
 import Modal from '../modal/Modal';
 import Navigation from '../../navigation/Navigation';
 import Header from '../header/Header';
+import UserMenu from '../userMenu/UserMenu';
 
-import {mainRoutes} from '../../navigation/routes';
+import {globalRoutes} from '../../navigation/globalRoutes';
 import { getContactsOperations } from "../../redux/operations/contactsOperations";
+import {refreshTokenOperation} from '../../redux/operations/authOperations';
 import { resetError } from "../../redux/actions/contactsActions";
 import {getContactsLoading,getError,getContacts} from '../../redux/selectors/contactsSelectors';
+import {getEmail,getAuthError,getAuthIsSuccessful,getTokenRefreshed} from '../../redux/selectors/authSelector';
 import {signOut} from '../../redux/actions/contactsActions';
 import PublicRoute from '../routes/PublicRoutes';
 import PrivateRoute from '../routes/PrivateRoutes';
@@ -38,7 +41,11 @@ const ContactsTracker = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const isAuth = useSelector(getIsAuth);
-
+  const email=useSelector(getEmail);
+  const errorAuth=useSelector(getAuthError);
+  const authIsSuccessful = useSelector(getAuthIsSuccessful);
+  const tokenRefreshed = useSelector(getTokenRefreshed);
+  
 
   useEffect(() => {
     if(isAuth) {
@@ -56,38 +63,45 @@ const ContactsTracker = () => {
 
   const onHandleSignOut = e=>{
     dispatch(signOut());
+    closeModal();
     history.push('/');
+  }
+
+  const onRefreshToken=e=>{
+    dispatch(refreshTokenOperation())
   }
 
   const closeModal =()=>{
     setShowMenu(false);
-    history.push('/')
+    isAuth? history.push('/contacts') : history.push('/home')
+    
   }
 
   return (
     <>
-     <Header onHandleClick={onHandleClick} onClick={onHandleSignOut} isAuth={isAuth}/>
+     <Header onHandleClick={onHandleClick} onClick={onHandleSignOut} isAuth={isAuth} email={email}/>
    
-      <Section>
       <Suspense fallback={<h2>...loading</h2>}>
-          
-          <Switch>
-          {mainRoutes.map((route) => (
-             route.isPrivate ? (
-              <PrivateRoute {...route} isAuth={isAuth} key={route.path} />
-            ) : (
-              <PublicRoute {...route} isAuth={isAuth} key={route.path} />
-            )
-          ))}
-          </Switch>
-        </Suspense>
+        <Switch>
+        {globalRoutes.map((route) => (
+            route.isPrivate ? (
+            <PrivateRoute {...route} isAuth={isAuth} key={route.path} />
+          ) : (
+            <PublicRoute {...route} isAuth={isAuth} key={route.path} />
+          )
+        ))}
+        </Switch>
+      </Suspense>
       
-      </Section>
-          {/* {showMenu && 
-            <Modal onClose={closeModal}> */}
-                {/* <Navigation/> */}
-                
-            {/* </Modal>} */}
+      {isAuth && showMenu && 
+        <Modal onClose={closeModal}>
+            {isAuth && <UserMenu email={email} isAuth={isAuth} onClick={onHandleSignOut} onClose={closeModal} count={contactsArr.length} tokenRefreshed={tokenRefreshed} refreshToken={onRefreshToken}/>}
+        </Modal>}
+
+      {!isAuth && showMenu && 
+      <Modal onClose={closeModal}>
+          {!isAuth && <UserMenu  isAuth={isAuth}  onClose={closeModal} errorAuth={errorAuth} authIsSuccessful={authIsSuccessful} />}
+      </Modal>}
 
     </>
   );

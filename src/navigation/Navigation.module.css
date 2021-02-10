@@ -1,17 +1,27 @@
 .link{
     display: block;
-    margin:10px;
+    margin:0;
     text-decoration: none;
     color:grey;
+    margin-right:10px;
 }
+
+/* .link:last-child{
+    margin-right: 0;
+} */
 
 .linkActive{
     display: block;
-    margin:10px;
     text-decoration: none;
     color:blue;
+    margin-right:10px;
 }
+
+/* .linkActive:last-child{
+    margin-right: 0;
+} */
 
 .linkList{
     display: flex;
+    margin-right: -10px;
 }

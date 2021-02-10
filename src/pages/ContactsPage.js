@@ -2,7 +2,7 @@ import React from 'react';
 import {useSelector,useDispatch} from 'react-redux';
 
 import { resetError } from "../redux/actions/contactsActions";
-import { getError, getContactsLoading,getEmptyListMessage } from "../redux/selectors/contactsSelectors";
+import { getError, getContactsLoading} from "../redux/selectors/contactsSelectors";
 
 import Section from "../components/section/Section";
 import Form from '../components/form/Form';

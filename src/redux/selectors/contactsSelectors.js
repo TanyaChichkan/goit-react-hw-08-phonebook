@@ -20,5 +20,4 @@ export {
   getVisibleContacts,
   getError,
   getContactsLoading,
-  // getEmptyListMessage
 };

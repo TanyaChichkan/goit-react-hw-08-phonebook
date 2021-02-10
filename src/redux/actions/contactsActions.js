@@ -36,10 +36,13 @@ export const setAuthLoading=createAction("AUTH_SET_LOADING");
 
 export const setAuthError=createAction("AUTH_SET_ERROR");
 
-export const setEmptyListMessage = createAction("CONTACTS_SET_EMPTY_LIST_MESSAGE");
+export const resetAuthError=createAction("AUTH_RESET_ERROR");
 
-export const resetEmptyListMessage = createAction("CONTACTS_SET_EMPTY_LIST_MESSAGE")
+export const refreshToken = createAction("REFRESH_TOKEN");
 
+export const authIsSuccessful = createAction("AUTH_IS_SUCCESSFUL");
+
+export const tokenIsRefreshed = createAction("TOKEN_IS_REFRESHED");
 
 
 // ====================================Redux===========================================

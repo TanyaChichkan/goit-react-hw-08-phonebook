@@ -42,3 +42,9 @@ h1{
   color: blue;
   margin:0;
 }
+
+body{
+  background-image: url('./pic/background-2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}

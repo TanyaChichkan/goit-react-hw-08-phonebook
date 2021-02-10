@@ -7,8 +7,6 @@ import {
   getContacts,
   changeContact,
   resetSelected,
-  setEmptyListMessage,
-  resetEmptyListMessage
 } from "../actions/contactsActions";
 
 
@@ -45,9 +43,6 @@ export const addContactOperations = (contact) => async (dispatch,getState) => {
       }
     );
     dispatch(addContact({ ...contact, id: response.data.name }));
-    // if(contactsLength>1){
-    //   dispatch(setEmptyListMessage());
-    // }
   } catch (error) {
     dispatch(dispatch(setError(error)));
   } finally {
@@ -111,7 +106,7 @@ export const getContactsOperations = () => (dispatch,getState) => {
     })
     .catch((error) => {
       console.log(error);
-      // dispatch(setError(error))
+      dispatch(setError(error))
     })
     .finally(() => dispatch(setLoading()));
 };

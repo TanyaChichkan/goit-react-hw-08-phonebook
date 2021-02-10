@@ -19,9 +19,10 @@ const Modal = ({children,onClose}) => {
       },)
     
       const handleClick=e=>{
-        e.target.nodeName==="DIV" && onClose();
+        if(e.target.nodeName==="DIV") onClose();
       }
-    return(
+
+      return(
         <div className={overlay} onClick={handleClick}>
             <div className={modal}>
                 {children}
